@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Oceano Vivo - Promovendo a conscientização sobre os impactos humanos nos oceanos através de pesquisa, educação e inovação.">
+  <meta name="keywords" content="oceanos, sustentabilidade, preservação ambiental, biodiversidade marinha, CICTED">
+  <meta name="author" content="Equipe Oceano Vivo">
+  <meta name="robots" content="index, follow">
+  <title>Oceano Vivo - Reflexos da Nossa Consciência</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Preload critical assets -->
+  <link rel="preload" href="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80" as="image">
+  <style>
+    /* ----------------------------------- */
+    /* ----- 1. ESTILOS GERAIS & RESET ----- */
+    /* ----------------------------------- */
+    :root {
+      --color-primary: #00bcd4; /* Azul turquesa vibrante */
+      --color-secondary: #004d61; /* Azul escuro secundário */
+      --color-background: #001f3f; /* Azul marinho profundo */
+      --color-text-light: #e0f7fa; /* Ciano claro */
+      --color-card-bg: #004080; /* Azul médio para cards */
+      --color-accent: #0097a7; /* Ciano acentuado */
+      --color-warning: #ff6f61; /* Coral para alertas */
+      --color-success: #4caf50; /* Verde para sucesso */
+      --gradient-overlay: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(0, 31, 63, 0.7) 100%);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-text-light);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: var(--color-primary);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    a:hover {
+      color: var(--color-accent);
+    }
+    section {
+      padding: 120px 5%;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 25px;
+    }
+    h2 {
+      font-size: clamp(2.5em, 5vw, 3.5em);
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      width: 100px;
+      height: 4px;
+      background: var(--color-primary);
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--color-primary);
+      color: var(--color-background);
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      background: var(--color-accent);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 188, 212, 0.4);
+    }
+
+    /* ----------------------------- */
+    /* ----- 2. CABEÇALHO & NAV ----- */
+    /* ----------------------------- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(0, 43, 91, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 20px 5%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+    header.scrolled {
+      transform: translateY(0);
+      background: rgba(0, 43, 91, 1);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 2.2em;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--color-primary);
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+    nav ul li a {
+      font-weight: 600;
+      color: var(--color-text-light);
+      font-size: 1.1em;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      bottom: -5px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8em;
+      color: var(--color-primary);
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--color-secondary);
+        padding: 20px;
+        text-align: center;
+      }
+      nav ul.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* ----------------- */
+    /* ----- 3. BANNER ----- */
+    /* ----------------- */
+    .banner {
+      height: 100vh;
+      background: var(--gradient-overlay), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle at center, rgba(0, 188, 212, 0.3) 0%, rgba(0, 31, 63, 0) 70%);
+      animation: pulse 8s infinite ease-in-out;
+    }
+    .banner-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      animation: fadeInDown 1.5s ease-in-out;
+    }
+    .banner h1 {
+      font-size: clamp(3em, 7vw, 5em);
+      font-weight: 800;
+      color: var(--color-text-light);
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+    .banner p {
+      font-family: 'Open Sans', sans-serif;
+      font-size: clamp(1.2em, 2.5vw, 1.8em);
+      margin-bottom: 40px;
+    }
+
+    /* --------------------------- */
+    /* ----- 4. CARDS & GRID ----- */
+    /* --------------------------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .card {
+      background: var(--color-card-bg);
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 188, 212, 0.1);
+      transform: scale(0);
+      transition: transform 0.4s ease;
+      border-radius: 20px;
+    }
+    .card:hover::before {
+      transform: scale(1);
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    }
+    .card h3 {
+      font-size: 1.8em;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+    .card p {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.1em;
+      color: var(--color-text-light);
+    }
+
+    /* --------------------- */
+    /* ----- 5. VÍDEOS ----- */
+    /* --------------------- */
+    .video-container {
+      margin: 50px auto;
+      width: 100%;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+      transition: transform 0.5s ease;
+    }
+    .video-container iframe:hover {
+      transform: scale(1.02);
+    }
+
+    /* ----------------------- */
+    /* ----- 6. DOCUMENTOS ----- */
+    /* ----------------------- */
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .doc-card {
+      background: var(--color-card-bg);
+      border-radius: 20px;
+      padding: 35px;
+      text-align: center;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .doc-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    }
+    .doc-card h3 {
+      font-size: 1.7em;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+    .doc-card a {
+      font-weight: 700;
+      margin-top: 20px;
+    }
+    .doc-card a i {
+      margin-right: 10px;
+    }
+
+    /* --------------------- */
+    /* ----- 7. CONTATO ----- */
+    /* --------------------- */
+    .contact-form {
+      background: var(--color-card-bg);
+      padding: 50px;
+      border-radius: 25px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+      max-width: 700px;
+      margin: 50px auto;
+    }
+    .contact-form h3 {
+      font-size: 2.2em;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.1em;
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--color-text-light);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 0 4px var(--color-primary);
+    }
+    .contact-form button {
+      background: var(--color-primary);
+      color: var(--color-background);
+      padding: 18px 35px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.2em;
+      width: 100%;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .contact-form button:hover {
+      background: var(--color-accent);
+      transform: scale(1.02);
+    }
+
+    /* ------------------- */
+    /* ----- 8. RODAPÉ ----- */
+    /* ------------------- */
+    footer {
+      background: var(--color-secondary);
+      color: var(--color-text-light);
+      text-align: center;
+      padding: 50px 5%;
+      font-size: 1em;
+    }
+    .footer-social {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+    .footer-social a {
+      font-size: 1.8em;
+      color: var(--color-text-light);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .footer-social a:hover {
+      color: var(--color-primary);
+      transform: scale(1.2);
+    }
+
+    /* ----------------------- */
+    /* ----- 9. ANIMAÇÕES ----- */
+    /* ----------------------- */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.15); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 0.4; }
+    }
+
+    /* ---------------------- */
+    /* ----- 10. ACESSIBILIDADE ----- */
+    /* ---------------------- */
+    :focus {
+      outline: 3px solid var(--color-primary);
+      outline-offset: 4px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* ---------------------- */
+    /* ----- 11. RESPONSIVIDADE ----- */
+    /* ---------------------- */
+    @media (max-width: 1024px) {
+      .banner h1 { font-size: clamp(2.5em, 6vw, 4em); }
+      .banner p { font-size: clamp(1em, 2vw, 1.5em); }
+      .card-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      section { padding: 80px 5%; }
+      .contact-form { padding: 30px; }
+      .banner { height: 80vh; }
+    }
+    @media (max-width: 480px) {
+      h2 { font-size: clamp(2em, 4vw, 2.5em); }
+      .btn { padding: 12px 30px; font-size: 0.9em; }
+      .card, .doc-card { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <div class="logo">Oceano Vivo</div>
+    <span class="menu-toggle" aria-label="Abrir menu de navegação"><i class="fas fa-bars"></i></span>
+    <ul>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#metodos">Métodos</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#documentario">Documentário</a></li>
+      <li><a href="#videos">Vídeos</a></li>
+      <li><a href="#cicted">O CICTED</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="banner">
+  <div class="banner-content">
+    <h1>Reflexos da Nossa Consciência</h1>
+    <p>Explorando o impacto humano nos oceanos e promovendo a sustentabilidade ambiental</p>
+    <a href="#sobre" class="btn">Saiba Mais <i class="fas fa-arrow-right"></i></a>
+  </div>
+</div>
+
+<section id="sobre" class="container">
+  <h2>Sobre o Projeto</h2>
+  <p>O projeto “Oceano Vivo” investiga o nível de conhecimento, atitudes e responsabilidade individual em relação aos impactos humanos nos oceanos. Nosso foco abrange fenômenos críticos como acidificação, alterações na circulação termohalina, aquecimento das águas e elevação do nível do mar, que afetam diretamente a biodiversidade marinha e os ecossistemas costeiros.</p>
+  <p>Adotamos uma abordagem integrada, combinando metodologias qualitativas e quantitativas, incluindo questionários, entrevistas semiestruturadas e observação participante, para mapear percepções e comportamentos da comunidade em prol da preservação oceânica.</p>
+</section>
+
+<section id="metodos" class="container">
+  <h2>Métodos de Pesquisa</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Questionários Estruturados</h3>
+      <p>Aplicados a diferentes perfis socioeconômicos, identificam o conhecimento geral e as atitudes sobre questões oceânicas.</p>
+    </div>
+    <div class="card">
+      <h3>Entrevistas Semiestruturadas</h3>
+      <p>Exploram percepções, sentimentos e motivações, oferecendo uma análise profunda do comportamento humano.</p>
+    </div>
+    <div class="card">
+      <h3>Observação Participante</h3>
+      <p>Mapeia práticas diárias de consumo e descarte de resíduos, analisando impactos diretos e indiretos nos ecossistemas marinhos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="resultados" class="container">
+  <h2>Resultados Esperados</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Impactos Humanos</h3>
+      <p>Análises detalhadas revelam como ações cotidianas afetam a biodiversidade marinha, destacando áreas de risco.</p>
+    </div>
+    <div class="card">
+      <h3>Sensibilização Social</h3>
+      <p>Conteúdos educativos e campanhas para transformar comportamentos e promover práticas sustentáveis.</p>
+    </div>
+    <div class="card">
+      <h3>Conservação e Educação</h3>
+      <p>Recomendações para práticas sustentáveis e formação de uma cultura oceânica responsável.</p>
+    </div>
+  </div>
+</section>
+
+<section id="documentario" class="container">
+  <h2>Documentário</h2>
+  <p>Assista ao nosso documentário, que apresenta a pesquisa, depoimentos e imagens exclusivas do trabalho de campo, destacando impactos humanos e iniciativas de preservação.</p>
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Documentário Oceano Vivo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section id="videos" class="container">
+  <h2>Vídeos Educativos</h2>
+  <p>Explore vídeos que promovem a compreensão sobre oceanos, sustentabilidade e preservação ambiental.</p>
+  <div class="doc-grid">
+    <div class="card doc-card">
+      <h3>Como o Plástico Afeta os Oceanos</h3>
+      <p>Um vídeo explicativo sobre a poluição plástica nos oceanos e soluções viáveis.</p>
+      <a href="https://www.youtube.com/watch?v=H7wxFZ8uZ6k" target="_blank" class="btn">Assistir <i class="fas fa-external-link-alt"></i></a>
+    </div>
+    <div class="card doc-card">
+      <h3>Aquecimento Global e Oceanos</h3>
+      <p>Análise do impacto do aquecimento global nos ecossistemas marinhos.</p>
+      <a href="https://www.youtube.com/watch?v=xyz" target="_blank" class="btn">Assistir <i class="fas fa-external-link-alt"></i></a>
+    </div>
+    <div class="card doc-card">
+      <h3>Biodiversidade Marinha</h3>
+      <p>Explore a importância da biodiversidade marinha para o equilíbrio ambiental.</p>
+      <a href="https://www.youtube.com/watch?v=abc" target="_blank" class="btn">Assistir <i class="fas fa-external-link-alt"></i></a>
+    </div>
+  </div>
+</section>
+
+<section id="cicted" class="container">
+  <h2>O Que é o CICTED?</h2>
+  <p>O CICTED (Centro de Inovação, Ciência, Tecnologia e Educação para o Desenvolvimento) promove pesquisas científicas, inovação tecnológica e educação ambiental, com foco na preservação dos ecossistemas. Integra conhecimento, tecnologia e responsabilidade social para fortalecer a cultura científica e ambiental.</p>
+  <p>Seus objetivos incluem disseminar informações científicas acessíveis, incentivar a participação em projetos ambientais e desenvolver soluções sustentáveis, especialmente para os oceanos.</p>
+</section>
+
+<section id="contato" class="container">
+  <h2>Contato Conosco</h2>
+  <div class="contact-form">
+    <h3>Envie sua Mensagem</h3>
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+      <input type="text" name="nome" placeholder="Seu Nome" required aria-label="Nome completo">
+      <input type="email" name="email" placeholder="Seu Email" required aria-label="Endereço de email">
+      <textarea name="mensagem" rows="6" placeholder="Sua Mensagem" required aria-label="Mensagem"></textarea>
+      <button type="submit">Enviar <i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-social">
+    <a href="https://facebook.com" aria-label="Facebook do Oceano Vivo"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com" aria-label="Twitter do Oceano Vivo"><i class="fab fa-twitter"></i></a>
+    <a href="https://instagram.com" aria-label="Instagram do Oceano Vivo"><i class="fab fa-instagram"></i></a>
+    <a href="https://linkedin.com" aria-label="LinkedIn do Oceano Vivo"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+  <p>© 2025 Oceano Vivo | Desenvolvido com <i class="fas fa-heart" style="color: var(--color-warning);"></i> por Equipe Oceano Vivo</p>
+</footer>
+
+<script>
+  // Menu Mobile
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navUl = document.querySelector('nav ul');
+  menuToggle.addEventListener('click', () => {
+    navUl.classList.toggle('active');
+    menuToggle.setAttribute('aria-expanded', navUl.classList.contains('active'));
+  });
+
+  // Animação de rolagem para seções
+  const sections = document.querySelectorAll('section');
+  const observerOptions = {
+    threshold: 0.3
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, observerOptions);
+  sections.forEach(section => observer.observe(section));
+
+  // Efeito de rolagem no header
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    header.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Formulário com validação e feedback
+  const form = document.getElementById('contact-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData
+      });
+      if (response.ok) {
+        form.reset();
+        alert('Mensagem enviada com sucesso!');
+      } else {
+        alert('Erro ao enviar a mensagem. Tente novamente.');
+      }
+    } catch (error) {
+      alert('Erro de conexão. Verifique sua internet.');
+    }
+  });
+
+  // Lazy loading para vídeos
+  document.querySelectorAll('iframe').forEach(iframe => {
+    iframe.setAttribute('loading', 'lazy');
+  });
+</script>
+</body>
+</html>
